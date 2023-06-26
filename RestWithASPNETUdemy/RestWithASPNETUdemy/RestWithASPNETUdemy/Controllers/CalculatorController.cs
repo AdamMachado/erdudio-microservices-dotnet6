@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace RestWithASPNETUdemy.Controllers
     [Route("[controller]")]
     public class CalculatorController : ControllerBase
     {
-  
+
 
         private readonly ILogger<CalculatorController> _logger;
 
@@ -24,7 +25,7 @@ namespace RestWithASPNETUdemy.Controllers
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
         public IActionResult Sum(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(secondNumber)&& IsNumeric(firstNumber))
+            if (IsNumeric(secondNumber) && IsNumeric(firstNumber))
             {
                 var sum = ConvetToDecimal(firstNumber) + ConvetToDecimal(secondNumber);
                 return Ok(sum.ToString());
@@ -42,6 +43,7 @@ namespace RestWithASPNETUdemy.Controllers
             }
             return BadRequest("Invalid input");
         }
+
 
         [HttpGet("mutiplication/{firstNumber}/{secondNumber}")]
         public IActionResult Multiplication(string firstNumber, string secondNumber)
@@ -70,7 +72,7 @@ namespace RestWithASPNETUdemy.Controllers
         {
             if (IsNumeric(secondNumber) && IsNumeric(firstNumber))
             {
-                var sum = (ConvetToDecimal(firstNumber) + ConvetToDecimal(secondNumber))/2;
+                var sum = (ConvetToDecimal(firstNumber) + ConvetToDecimal(secondNumber)) / 2;
                 return Ok(sum.ToString());
             }
             return BadRequest("Invalid input");
@@ -82,7 +84,7 @@ namespace RestWithASPNETUdemy.Controllers
             if (IsNumeric(firstNumber))
             {
                 var squareroot = Math.Sqrt((Double)ConvetToDecimal(firstNumber));
-              
+
                 return Ok(squareroot.ToString());
             }
             return BadRequest("Invalid input");
@@ -90,17 +92,17 @@ namespace RestWithASPNETUdemy.Controllers
         private decimal ConvetToDecimal(string strNumber)
         {
             decimal decimalValue;
-            if(decimal.TryParse(strNumber, out decimalValue))
+            if (decimal.TryParse(strNumber, out decimalValue))
             {
                 return decimalValue;
             }
             return 0;
         }
-    
+
         private bool IsNumeric(string strNumber)
         {
             double number;
-            bool isNumeric =  double.TryParse(
+            bool isNumeric = double.TryParse(
                 strNumber,
                 System.Globalization.NumberStyles.Any,
                 System.Globalization.NumberFormatInfo.InvariantInfo,
